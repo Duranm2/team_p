@@ -10,7 +10,7 @@ app.use(express.urlencoded({ extended: true}));
 
 const MongoClient = require("mongodb").MongoClient;
 
-const URL = "mongodb+srv://admin:tjsdnek@traveler.xbwcx.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+const URL = "mongodb+srv://admin:gachon12@traveler.xbwcx.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
 
 let _db;
 let reviews;
