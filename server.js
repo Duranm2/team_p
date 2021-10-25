@@ -1,16 +1,19 @@
-const express = require('express') // express 모듈 참조
+const express = require('express'); // express 모듈 참조
 const app = express(); // express 서버 객체 생성
+
 
 /* 서버 실행 */
 require("dotenv").config();
 
 app.use(express.json());
 
-app.use(express.urlencoded({ extended: true}));
+app.use(express.urlencoded({extended: true}));
 
 const MongoClient = require("mongodb").MongoClient;
 
 const URL = "mongodb+srv://admin:gachon12@traveler.xbwcx.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+
+
 
 let _db;
 let reviews;
@@ -26,6 +29,11 @@ MongoClient.connect(process.env.MONGODB_URL, { useUnifiedTopology: true}, (error
     });
 })
 
+
+
+app.get("/", (req, res) => {
+    res.send("hello world");
+});
 
 app.get("/review", (req, res)=> {
     res.sendFile(__dirname + "/review.html");
