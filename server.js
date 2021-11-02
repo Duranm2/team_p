@@ -1,70 +1,109 @@
 const express = require('express'); // express 모듈 참조
 const app = express(); // express 서버 객체 생성
+const mongoose = require('mongoose');
+
+mongoose.Promise = global.Promise;
+const mongodb = require('mongodb');
+const { cursorTo } = require('readline');
+
+var MongoClient = require('mongodb').MongoClient;
+
+app.set('view engine', 'ejs');
+app.set('views', __dirname+'/views');
+app.engine('html', require('ejs').renderFile);
+
+const port = 3000;
+
+const MONGO_URI = "mongodb+srv://admin:gachon12@traveler.xbwcx.mongodb.net/restaurantDB?retryWrites=true&w=majority"
 
 
-/* 서버 실행 */
-require("dotenv").config();
+let client;
 
-app.use(express.json());
-
-app.use(express.urlencoded({extended: true}));
-
-const MongoClient = require("mongodb").MongoClient;
-
-const URL = "mongodb+srv://admin:gachon12@traveler.xbwcx.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
-
+app.use(express.json()); //json parsing
+app.use(express.urlencoded({extended: true }));
+//png, css 경로 문제해결
+app.use(express.static(__dirname + '/css/'));
+app.use(express.static('files'));
+app.use(express.static(__dirname + '/assets/'));
+app.use(express.static(__dirname + '/js/'));
 
 
-let _db;
-let reviews;
-
-MongoClient.connect(process.env.MONGODB_URL, { useUnifiedTopology: true}, (error, database) => {
+MongoClient.connect(MONGO_URI, { useUnifiedTopology: true}, (error, database) => {
     if (error) return console.log(error);
+    
+    console.log("MONGODB CONNECTED");
 
-    _db = database.db("reviewDB");
-    reviews = _db.collection("reviews");
-
-    app.listen(process.env.PORT, () => {
-        console.log('Server listening at http://localhost:${process.env.PORT}');  
-    });
+    client = database.db("restaurantDB");     
+    
 })
 
 
 
-app.get("/", (req, res) => {
-    res.send("hello world");
-});
+    app.get("/", (req, res) => {
+        res.render('index2.html');
+    });
+    
 
-app.get("/review", (req, res)=> {
-    res.sendFile(__dirname + "/review.html");
-}); 
+    app.get('/search', async(req,res)=>{
+        const name = req.query.name;
+        const food = req.query.food;
 
-app.post("/add", (req, res) =>{
-    const { review } = req.body;
-
-    reviews.insertOne({ review }).then(
-        (results) => {
-            console.log("DB insert result: ", results);
-        },
-        (error) => {
-            console.log("DB insert failed: ", error);
+        var result = client.collection("restaurants");
+        if (!name){
+            res.render('search.ejs', {documents: [] });
+            return 0;
         }
-    );
+        const docs = await result.find({ name : {$regex : name }}).toArray();
+
+        const docs2 = docs.filter((el)=> el.classify === food );
+        if(!docs2){
+            res.render('search.ejs', {documents: docs});
+            return 0;
+        }
+        console.log(docs);
+        res.render('search.ejs', {documents: docs2});
+    });
+
+
+   
+
+    app.get("/locsearch", async(req, res) => {
+        const address = req.query.address;
+        const food2 = req.query.food2;
+
+        var result2 = client.collection("restaurants");
+
+        if (!address){
+            res.render('restaurant_locsearch.ejs', {documents2: [] });
+            return 0;
+        }
+        const docs3 = await result2.find({ address : {$regex : address }}).toArray();
+
+        const docs4 = docs3.filter((el)=> el.classify === food2 );
+        if(!docs4){
+            res.render('restaurant_locsearch.ejs', {documents2: docs3});
+            return 0;
+        }
+        console.log(docs3);
+        res.render('restaurant_locsearch.ejs', {documents2: docs4});
+    });
+    
+    app.get("/info", (req, res) => {
+        res.render("restaurant_info.html")
+    });
+    
+    app.get("/service", (req, res) => {
+        res.render("service.html")
+    });
+
+    
+
+
+app.listen(port, () => {
+    console.log("Server listening on port 3000.");
 });
 
-app.get("/list", (req, res) => {
-    reviews
-        .find()
-        // .find({}, { projection: { projection: { _id: 0, reviews: 1 } } })
-        .toArray((error,docs) => {
-            if (error) return console.log(error);
+  
 
-            docs.forEach((doc) =>{
-                if (doc) {
-                    console.log(doc);
-                } else {
-                    res.end();
-                }
-            });
-        });
-});
+
+

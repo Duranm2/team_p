@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link href="/pageStyle.css" rel="stylesheet" />
+    <title>식당 검색 | 트래블러</title>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.3/angular.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.3/angular-route.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+        <!-- Core theme JS-->
+    <script src="scripts.js"></script>
+</head>
+<body class = "my-body">
+    <header class="masthead bg-primary text-white text-center">
+        <div class="container d-flex align-items-center flex-column">
+            <!-- Masthead Avatar Image-->
+            <img class="img-fluid rounded mb-5" src="img/portfolio/Traveler.png" alt="..." (static)/>
+            <!-- Masthead Heading-->
+            <h1 class="masthead-heading text-uppercase mb-0">트래블러</h1>
+            <!-- Icon Divider-->
+            <div class="divider-custom divider-light">
+                <div class="divider-custom-line"></div>
+                <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                <div class="divider-custom-line"></div>
+            </div>
+            <!-- Masthead Subheading-->
+            <p class="masthead-subheading font-weight-light mb-0">맛집 여행 & 코스 추천 서비스</p>
+        </div>
+    </header>
+        
+        <div class="search-restaurant">
+            <form action="/search" method="get">
+                <div class="searchRestaurant">
+                    <input required type="text" class="input-restaurant" name="name" placeholder="식당명 검색" style="color: #192531;">
+                    <input type="submit" class="btn-submit" value="제출">
+                </div>
+           
+            <br>
+            <br>
+            <br>
+            <div class="check-category">
+                <div class="checkbox_food">
+                    <div class="food_category_title">
+                        <h4><strong style="color: #192531;">요리 종류</strong></h4>
+                    </div>
+                    <div class="food_category">
+                        <input type='checkbox' name='food' value='한식' />한식
+                        <input type='checkbox' name='food' value='일식' style="margin-left: 10px;"/>일식      
+                        <input type='checkbox' name='food' value='중식' style="margin-left: 10px;"/>중식       
+                        <input type='checkbox' name='food' value='아시안' style="margin-left: 10px;"/>아시안  
+                        <input type='checkbox' name='food' value='양식' style="margin-left: 10px;"/>양식 
+                        <input type='checkbox' name='food' value='디저트' style="margin-left: 10px;"/>디저트     
+                    </div>
+                </div>
+            
+            </form>
+                <br>
+                <br>
+            </div>
+            <hr>
+            <table class = "table">
+            <thead>
+                <tr>
+                    <th scope ="row"><p style ="font-size:30px">#</p></th>
+                    <th scope ="row"><p style ="font-size:30px">가게이름</p></th>
+                    <th scope ="row"><p style ="font-size:30px">주소</p></th>
+                    <th scope ="row"><p style ="font-size:30px">영업시간</p></th>
+                    <th scope ="row"><p style ="font-size:30px">전화번호</p></th>
+                    <th scope ="row"><p style ="font-size:30px">가게사진</p></th>
+                    <th scope ="row"><p style ="font-size:30px">분류</p></th>
+                </tr>
+            </thead>
+        
+            <tbody>
+                
+                <% documents && documents.forEach(function(val,idx){ %>
+                    <tr>
+                        <td><p style ="font-size:40px"><%= idx + 1 %> ></p>  </td>
+                        <td><p style ="font-size:40px"><%= val.name %></p></td>
+                        <td><p style ="font-size:40px"><%= val.address %></p></td>
+                        <td><p style ="font-size:40px"><%= val.time %></p></td>
+                        <td><p style ="font-size:40px"><%= val.tel %></p></td>
+                        <td><img src= <%= val.picture %> style="width:350px" ></td>
+                        <td><p style ="font-size:40px"><%= val.classify %></p></td>
+                    </tr>
+                <% }) %>
+               
+            </tbody>
+            </table>
+        </div>
+        <footer class="footer">
+            <div class="inner">
+                <h3 style="text-align: center; color: #ffffff;" >LOCATION</h3>
+                <h2>
+                    <p style="text-align: center; color: #ffffff;">
+                        경기 성남시 수정구 성남대로 1342
+                    </p>
+                </h2>
+                <h4 style="text-align: center; color: #ffffff;">Clark, MO 65243</h4>
+            </div>
+        </footer>
+</body>
+</html>

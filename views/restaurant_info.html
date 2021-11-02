@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ko-KR">
+
+    <head>
+        <meta charset="UTF-8" />
+        <link href="/pageStyle.css" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>
+        <title>식당 상세 조회 | 트래블러</title>
+    </head>
+    <body>
+        <br>
+    <br>
+    <br>
+        <section class="restaurant_section">
+            <div class="restaurant_title">
+                <h2 class="title" style="text-align: center;">맛있는 식당</h2>
+            </div>
+            <!--식당 상세 정보-->
+            <div class="restaurant_information" style="text-align: center;">
+                <span class="restaurant_category">종류 : 분식 |</span>
+                <span class="rating_click">
+                    <span class="score">
+                        <em class="scoreNum" title="4.0">평점 4.0</em>
+                    </span>
+                    <span class='RatingStar'>
+                        <span class='RatingScore'>
+                          <span class='outer-star'>
+                              <span class='inner-star'></span>
+                          </span>
+                        </span>
+                    </span>
+                    <script>
+                    ratings = {RatingScore: 4.5} 
+                    totalRating = 5;
+                    table = document.querySelector('.RatingStar');
+                    function rateIt() {
+                        for (rating in ratings) {
+                            ratingPercentage = ratings[rating] / totalRating * 100;ratingRounded = Math.round(ratingPercentage / 10) * 10 + '%';
+                            star = table.querySelector(`.${rating} .inner-star`);
+                            numberRating = table.querySelector(`.${rating} .numberRating`);
+                            star.style.width = ratingRounded;numberRating.innerText = ratings[rating];
+                            }
+                        } rateIt()
+                    </script>
+                </span>
+                <div class="restaurant_address">
+                    <h>주소 : 경기 성남시 수정구 성남대로 1342</h>
+                </div>
+                <div class="restaurant_phoneNum">
+                    <h>연락처 : 031-123-4567</h>
+                </div>
+                <div class="restaurant_openHour">
+                    <h>영업시간 : 10:00 ~ 19:00</h>
+                </div>
+                <hr>
+                <!--메뉴 정보-->
+                <div class="restaurant_menu">
+                    <h4 class="menu_title">메뉴</h4>
+                    <div class="menu_detail">
+                        <ul class="menu_list">
+                            <li class="menu_info">
+                                <div class="menu">
+                                    <span class="menu_name">떡볶이</span>
+                                    <span class="menu_price">5,000</span>
+                                </div>
+                            </li>
+                            <li class="menu_info">
+                                <div class="menu">
+                                    <span class="menu_name">김밥</span>
+                                    <span class="menu_price">2,000</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <hr>
+                <!--카카오맵 실행이 안 됨/추후추가예정-->
+                <h4 class="menu_title">자세한 위치</h4>
+                <div class="kakao_map">
+                    <div id="" class="root_daum_roughmap root_daum_roughmap_landing">
+                        <script class="daum_roughmap_loader_script" src="https://ssl.daumcdn.net/dmaps/map_js_init/roughmapLoader.js"></script>
+                        <script>
+                            new daum.roughmap.Lander({
+                                "timestamp" : "1606489568928",
+                                "key" : "236fb",
+                                "mapWidth" : "600",
+                                "mapHeight" : "400"
+                            }).render();
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <br>
+    <br>
+    <section id="whitespace" style="background-color:#347ab7">
+        <!--<p>Travelers</p>-->
+    </section>
+    <footer class="footer">
+        <div class="inner">
+            <h3 style="text-align: center; color: #ffffff;" >LOCATION</h3>
+            <h2>
+                <p style="text-align: center; color: #ffffff;">
+                    경기 성남시 수정구 성남대로 1342
+                </p>
+            </h2>
+            <h4 style="text-align: center; color: #ffffff;">Clark, MO 65243</h4>
+        </div>
+    </footer>
+    </body>
+</html>
