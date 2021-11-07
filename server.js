@@ -73,23 +73,35 @@ MongoClient.connect(MONGO_URI, { useUnifiedTopology: true}, (error, database) =>
 
         var result2 = client.collection("restaurants");
 
-        if (!address){
-            res.render('restaurant_locsearch.ejs', {documents2: [] });
+        if (!address && !food2){
+            res.render('restaurant_locsearch.ejs', {documents2: [], documents3: [] });
             return 0;
         }
-        const docs3 = await result2.find({ address : {$regex : address }}).toArray();
 
-        const docs4 = docs3.filter((el)=> el.classify === food2 );
-        if(!docs4){
-            res.render('restaurant_locsearch.ejs', {documents2: docs3});
-            return 0;
-        }
-        console.log(docs3);
-        res.render('restaurant_locsearch.ejs', {documents2: docs4});
+        //식당
+        const docs3 = await result2.find({'$and': [ { address : {$regex : address }}, { name : {$regex : food2 }}] }).toArray();
+
+        const nums = docs3.length;
+        const randoms = Math.floor(Math.random()*nums);
+        
+        const docs4 = await result2.find({'$and': [ { address : {$regex : address }}, { name : {$regex : food2 }}] }).limit(1).skip(randoms).toArray();
+        
+        //디저트
+        const docs5 = await result2.find({'$and': [ { address : {$regex : address }}, { classify : '디저트' }] }).toArray();
+
+        const nums2 = docs5.length;
+        const randoms2 = Math.floor(Math.random()*nums2);
+
+        const docs6 = await result2.find({'$and': [ { address : {$regex : address }}, { classify : '디저트' }] }).limit(1).skip(randoms2).toArray();
+    
+       res.render('restaurant_locsearch.ejs', {documents2: docs4, documents3: docs6});
     });
     
+
+
     app.get("/info", (req, res) => {
-        res.render("restaurant_info.html")
+
+        res.render("restaurant_info.ejs")
     });
     
     app.get("/service", (req, res) => {

@@ -58,18 +58,20 @@
             </form>
                 <br>
                 <br>
+            
             </div>
             <hr>
+
             <table class = "table">
             <thead>
                 <tr>
-                    <th scope ="row"><p style ="font-size:30px">#</p></th>
-                    <th scope ="row"><p style ="font-size:30px">가게이름</p></th>
-                    <th scope ="row"><p style ="font-size:30px">주소</p></th>
-                    <th scope ="row"><p style ="font-size:30px">영업시간</p></th>
-                    <th scope ="row"><p style ="font-size:30px">전화번호</p></th>
-                    <th scope ="row"><p style ="font-size:30px">가게사진</p></th>
-                    <th scope ="row"><p style ="font-size:30px">분류</p></th>
+                    <th scope ="rowgroup"><p style ="font-size:30px">#</p></th>
+                    <th scope ="rowgroup"><p style ="font-size:30px">식당이름</p></th>
+                    <th scope ="rowgroup"><p style ="font-size:30px">주소</p></th>
+                    <th scope ="rowgroup"><p style ="font-size:30px">영업시간</p></th>
+                    <th scope ="rowgroup"><p style ="font-size:30px">전화번호</p></th>
+                    <th scope ="rowgroup"><p style ="font-size:30px">식당사진</p></th>
+                    <th scope ="rowgroup"><p style ="font-size:30px">분류</p></th>
                 </tr>
             </thead>
         
@@ -82,7 +84,7 @@
                         <td><p style ="font-size:40px"><%= val.address %></p></td>
                         <td><p style ="font-size:40px"><%= val.time %></p></td>
                         <td><p style ="font-size:40px"><%= val.tel %></p></td>
-                        <td><img src= <%= val.picture %> style="width:350px" ></td>
+                        <td onClick="location.href='/info'"><img src= <%= val.picture %> style="width:350px" ></td>
                         <td><p style ="font-size:40px"><%= val.classify %></p></td>
                     </tr>
                 <% }) %>

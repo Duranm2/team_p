@@ -16,6 +16,55 @@
 		<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
         <!-- Core theme JS-->
         <script src="scripts.js"></script>
+        <script type="text/javascript">
+            function func() {
+                    var exptext = /^[A-Za-z0-9_]+[A-Za-z0-9]*[@]{1}[A-Za-z0-9]+[A-Za-z0-9]*[.]{1}[A-Za-z]{1,3}$/;
+                    var name = document.getElementById("name").value; 
+                    var email = document.getElementById("email").value;    
+                    var phone = document.getElementById("phone").value;        
+                    var message = document.getElementById("message").value; 
+                if(frm.name.value == ""){
+                    alert('이름을 입력해주십시오.');
+                    document.getElementById("frm").action = " ";
+                    frm.name.focus();
+                    
+                    return false;
+                }   
+                if(frm.email.value == ""){
+                    alert('이메일을 입력해주십시오.');
+                    frm.email.focus();
+                    document.getElementById("frm").action = " ";
+                    return false;
+                }
+                if(frm.email.value != ""){
+                    if(exptext.test(email)==false){
+                        alert('이메일 형식이 올바르지 않습니다.');
+                        frm.email.focus();
+                        return false;
+                    }
+                    else if(frm.message.value == ""){
+                        alert('건의사항을 입력해주십시오.');
+                        frm.message.focus();
+                        document.getElementById("frm").action = " ";
+                        return false;
+                    }
+                }
+                if(frm.phone.value == ""){
+                    alert('전화번호를 입력해주십시오.');
+                    frm.phone.focus();
+                    document.getElementById("frm").action = " ";
+                    return false;
+                }
+                if(frm.message.value == ""){
+                    alert('건의사항을 입력해주십시오.');
+                    frm.message.focus();
+                    document.getElementById("frm").action = " ";
+                    return false;
+                }
+                alert('건의사항이 접수되었습니다.');
+                window.location.href=window.location.href;
+            }
+            </script>
     </head>
     <body class="my-body">
         <!-- Masthead-->
@@ -37,7 +86,7 @@
             <hr>
             <div class= "menus" id="menu1">
         <ul>
-            <li><a href="/locsearch">코스지역검색</a></li>
+            <li><a href="/locsearch">여행지역 식당 추천받기</a></li>
             <li><a href="/search">식당검색</a></li>
             <li><a href="/service">서비스소개</a></li>
         </ul>   
@@ -49,59 +98,36 @@
             <div class="container">
                 <!-- Contact Section Heading-->
                 <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Contact Me</h2>
-                <!-- Icon Divider-->
-                <div class="divider-custom">
-                    <div class="divider-custom-line"></div>
-                    <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
-                    <div class="divider-custom-line"></div>
-                </div>
                 <!-- Contact Section Form-->
-                <div class="row justify-content-center">
-                    <div class="col-lg-8 col-xl-7">
-                        <form id="contactForm" data-sb-form-api-token="API_TOKEN">
-                            <!-- Name input-->
-                            <div class="form-floating mb-3">
-                                <input class="form-control" id="name" type="text" placeholder="Enter your name..." data-sb-validations="required" />
-                                <label for="name">Full name</label>
-                                <div class="invalid-feedback" data-sb-feedback="name:required">A name is required.</div>
-                            </div>
-                            <!-- Email address input-->
-                            <div class="form-floating mb-3">
-                                <input class="form-control" id="email" type="email" placeholder="name@example.com" data-sb-validations="required,email" />
-                                <label for="email">Email address</label>
-                                <div class="invalid-feedback" data-sb-feedback="email:required">An email is required.</div>
-                                <div class="invalid-feedback" data-sb-feedback="email:email">Email is not valid.</div>
-                            </div>
-                            <!-- Phone number input-->
-                            <div class="form-floating mb-3">
-                                <input class="form-control" id="phone" type="tel" placeholder="(123) 456-7890" data-sb-validations="required" />
-                                <label for="phone">Phone number</label>
-                                <div class="invalid-feedback" data-sb-feedback="phone:required">A phone number is required.</div>
-                            </div>
-                            <div class="form-floating mb-3">
-                                <textarea class="form-control" id="message" type="text" placeholder="Enter your message here..." style="height: 10rem" data-sb-validations="required"></textarea>
-                                <label for="message">Message</label>
-                                <div class="invalid-feedback" data-sb-feedback="message:required">A message is required.</div>
-                            </div>
-                            <!-- Submit success message-->
-                            <!---->
-                            <!-- This is what your users will see when the form-->
-                            <!-- has successfully submitted-->
-                            
-                            <!-- Submit error message-->
-                            <!---->
-                            <!-- This is what your users will see when there is-->
-                            <!-- an error submitting the form-->
-                            <div class="d-none" id="submitErrorMessage"><div class="text-center text-danger mb-3">Error sending message!</div></div>
-                            <!-- Submit Button-->
-                            <button class="btn btn-primary btn-xl disabled" id="submitButton" type="submit">Send</button>
-                        </form>
+                <div id="form-div">
+                    <form class="form" name="frm" id="frm">
+                      <div class="name" style="text-align: center;">
+                        <input name="name" type="text" class="validate[required,custom[onlyLetter],length[0,100]] feedback-input" placeholder="Name..." id="name" />
                     </div>
+                      
+                      <div class="email" style="text-align: center;">
+                        <input name="email" type="email required" class="validate[required,custom[email]] feedback-input"
+                        id="email" placeholder="name@example.com" data-sb-validations="required,email"/>
+                    </div>
+                      
+                      <div class="phone" style="text-align: center;">
+                        <input name="phone" type="tel" class="validate[required,custom[phone]] feedback-input" id="phone" placeholder="123-4567-8910" />
+                    </div>
+
+                      <div class="message" style="text-align: center;">
+                        <textarea name="message" class="validate[required,length[6,300]] feedback-message" id="message" placeholder="Enter your message here..."></textarea>
+                    </div>
+                      <div class="submit">
+                        <input type="button" value="SEND" id="button-blue" onclick="func()"/>
+                        <div class="ease"></div>
+                        <br><br>
+                      </div>
+                    </form>
                 </div>
             </div>
         </section>
         <!-- Footer-->
-        <footer class="footer text-center" style="background-color:#192531 !important;">
+        <footer class="footer text-center" style="background-color:#192531">
             <div class="container">
                 <div class="row">
                     <!-- Footer Location-->
@@ -111,9 +137,9 @@
                         </p>
                     </div>
                     <!-- Footer Social Icons-->
-                    <div class="col-lg-4 mb-5 mb-lg-0">
-                        <h4 class="text-uppercase mb-4" style="color: #ffffff !important;">Location</h4>
-                        <p class="lead mb-0" style="color: #ffffff !important;">
+                    <div class="col-lg-4 mb-5 mb-lg-0"> 
+                        <h4 class="text-uppercase mb-4" style="color: #ffffff ">Location</h4>
+                        <p class="lead mb-0" style="color: #ffffff ">
                             경기 성남시 수정구 성남대로 1342
                             <br />
                             Clark, MO 65243
